@@ -1,0 +1,9 @@
+Customer Uses:
+	Create a new accout.
+	Change personal information.
+	Check balance of checking account.
+	Check balance of savings account.
+	Withdraw from checking account.
+	Withdraw from savings account.
+	Deposit to checking account.
+	Deposit to savings account.

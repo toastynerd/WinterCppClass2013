@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>570</x>
+      <y>30</y>
+      <w>330</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Account
+--
++type of account: enum
++account number: int
++account balance: float
+--
++change_blance(): boolean
++get_balance(): float
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>580</x>
+      <y>310</y>
+      <w>340</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Customer Info	
+--
++name: string
++address: string
++social security number: string
++accounts: Account array
+--
++change_info(): boolean
++get_info(): string
++add_account(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>230</x>
+      <y>170</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Teller
+--
+--
++create_new_account()
++update_personal_info()
++get_account_balance()
++depost()
++withdaw()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>190</y>
+      <w>50</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;120;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>410</x>
+      <y>80</y>
+      <w>180</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=-
+
+
+</panel_attributes>
+    <additional_attributes>30;150;160;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>410</x>
+      <y>230</y>
+      <w>190</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=-
+
+
+</panel_attributes>
+    <additional_attributes>30;30;170;170</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Actor</type>
+    <coordinates>
+      <x>0</x>
+      <y>220</y>
+      <w>100</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Actor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>30</x>
+      <y>230</y>
+      <w>220</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>30;30;200;30</additional_attributes>
+  </element>
+</diagram>
