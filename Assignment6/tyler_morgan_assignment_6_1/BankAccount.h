@@ -16,6 +16,8 @@ enum AccountType
 class Account
 {
 public:
+	Account();
+	Account(const Account&); //create an account placeholder
 	Account(AccountType type,std::string holder_name,int account_number,int pin_number);
 	~Account();
 	float get_balance(int pin_number);

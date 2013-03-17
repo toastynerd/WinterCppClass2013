@@ -1,5 +1,6 @@
 #include "TestHarness.h"
 #include "../BankAccount.h"
+#include "../Database.h"
 #include <sstream>
 
 // include the header file for the class you are testing.
@@ -47,4 +48,18 @@ TEST(Transfer, Account)
 	account_1.deposit(50.0);
 	account_1.transfer(20.0, account_2, 1234);
 	CHECK_EQUAL(20.0, account_2.get_balance(1077));
+}
+
+TEST(DatabaseReadWrite, Database)
+{
+	Database db;
+	Account account_1(checking, "Tyler Morgan",db.get_next_account_num(),1234);
+	Account account_2(checking, "Phil",db.get_next_account_num(), 1234);
+	db.write_to_db(account_1);
+	db.write_to_db(account_2);
+	Account& account_1_ref = db.get_account_by_num(0);
+	account_1_ref.deposit(15.0);
+	Account& account_2_ref = db.get_account_by_num(1);
+	account_1_ref.transfer(5.0,account_2_ref,1234);
+	CHECK_EQUAL(5.0, account_2_ref.get_balance(1234));
 }

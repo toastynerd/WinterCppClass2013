@@ -7,6 +7,28 @@
 #include "BankAccount.h"
 #include <iostream>
 
+//first two constructors needed to be able to create place holders in database.
+Account::Account()
+	:my_type(savings),
+	my_holder_name(""),
+	my_account_number(0),
+	my_pin_number(0),
+	my_balance(0)
+{
+
+}
+
+Account::Account(const Account& account)
+	:my_type(account.my_type),
+	my_holder_name(account.my_holder_name),
+	my_account_number(account.my_account_number),
+	my_pin_number(account.my_pin_number),
+	my_balance(account.my_balance)
+{
+
+}
+
+
 Account::Account(AccountType type,std::string holder_name,int account_number,int pin_number)
 	:my_type(type),
 	my_holder_name(holder_name),
