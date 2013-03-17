@@ -1,6 +1,6 @@
 #include "TestHarness.h"
-#include "../account.h"
-
+#include "../BankAccount.h"
+#include <sstream>
 
 // include the header file for the class you are testing.
 
@@ -10,10 +10,41 @@
 // the name of the class being tested
 
 
-TEST(Account_Constructor, Account)
+TEST(AccountCreation, Account)
 {
-	Account a_account(checking, 1);
-	CHECK_EQUAL(0.0,a_account.get_balance());
-
+	Account account_1(checking, "Tyler Morgan", 12345, 1234);
+	CHECK_EQUAL(0.0, account_1.get_balance(1234));
 }
 
+TEST(AccountDeposit, Account)
+{
+	Account account_1(checking, "Tyler Morgan", 12345, 1234);
+	account_1.deposit(10.0);
+	account_1.deposit(10.0,1234);
+	CHECK_EQUAL(20.0, account_1.get_balance(1234));
+}
+
+TEST(Withdraw, Account)
+{
+	Account account_1(checking, "Tyler Morgan", 12345, 1234);
+	account_1.deposit(10.0);
+	account_1.deposit(10.0,1234);
+	account_1.withdraw(10.0, 5678); //make sure it doesn't withdraw with wrong pin
+	CHECK_EQUAL(20.0, account_1.get_balance(1234));
+	account_1.withdraw(10.0,1234);
+	CHECK_EQUAL(10.0, account_1.get_balance(1234));
+}
+
+TEST(GetInfoMethods, Account)
+{
+	CHECK_EQUAL(1,1);
+}
+
+TEST(Transfer, Account)
+{
+	Account account_1(checking, "Tyler Morgan", 12345, 1234);
+	Account account_2(checking, "Philip J. Fry", 12346, 1077);
+	account_1.deposit(50.0);
+	account_1.transfer(20.0, account_2, 1234);
+	CHECK_EQUAL(20.0, account_2.get_balance(1077));
+}

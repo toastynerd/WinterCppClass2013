@@ -1,7 +1,7 @@
 //Tyler Morgan
 //Mar-16-2013
 //UW online winter c++ course
-//Assignment 6
+//Assignment 6.1
 //account.cpp
 #include "account.h"
 
@@ -17,7 +17,3 @@ Account::~Account()
 
 }
 
-float Account::get_balance()
-{
-	return my_account_balance;
-}
