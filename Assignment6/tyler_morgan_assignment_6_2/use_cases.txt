@@ -1,0 +1,6 @@
+Use cases for histogram:
+add a new histgram catagory
+print to ostream
+
+use cases for parse:
+parse a string

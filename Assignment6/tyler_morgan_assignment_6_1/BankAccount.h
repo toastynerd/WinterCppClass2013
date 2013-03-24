@@ -17,29 +17,21 @@ class Account
 {
 public:
 	Account();
-	Account(const Account&); //create an account placeholder
 	Account(AccountType type,std::string holder_name,int account_number,int pin_number);
 	~Account();
 	float get_balance(int pin_number);
-	void get_balance(std::ostream&, int);
 	int get_account_number();
-	void get_account_number(std::ostream&);
-	std::string get_name();
-	void get_name(std::ostream&);
-	AccountType get_type();
-	void get_type(std::ostream&);
 	void withdraw(float amount,int pin_number);
 	void deposit(float amount);
 	void deposit(float amount,int pin_number); //only display the final balance if pin number is entered.
 	void transfer(float amount, Account& transfer_to, int pin_number);
+	friend std::ostream& operator<<(std::ostream&, const Account&);
 
 private:
 	AccountType my_type;
 	std::string my_holder_name;
 	int my_account_number;
 	int my_pin_number; //in a real application this would be salted and hashed
-
-
 	float my_balance;
 };
 

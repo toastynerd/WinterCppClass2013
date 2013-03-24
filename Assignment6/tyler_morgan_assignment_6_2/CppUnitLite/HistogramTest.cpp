@@ -2,6 +2,7 @@
 #include "../Histogram.h"
 #include <string>
 #include <sstream>
+#include <iostream>
 
 // include the header file for the class you are testing.
 
@@ -9,30 +10,16 @@
 
 // replace testName with the name of the particular test. Replace ClassName with
 // the name of the class being tested
-TEST(HistogramInit, Histogram)
-{
-	Histogram histo;
-	CHECK_EQUAL(0,histo.get_alpha_count())
-}
-
-TEST(HistogramParse, Histogram)
-{
-	Histogram histo;
-	std::string parse_string = "Hello, and welcome999!";
-
-	parse_add(histo, parse_string);
-
-	CHECK_EQUAL(3,histo.get_digit_count());
-}
-
-TEST(HistogramOutput, Histogram)
+TEST(SOMETHING,SHOMETI)
 {
 	std::stringstream ss;
+	std::string parse_string("123this is a string to parse!");
 	Histogram histo;
-	std::string parse_string = "Hello 1234, how are you? That's cool.";
-
-	parse_add(histo, parse_string);
-
-	histo.get_punct_count(ss);
-	CHECK_EQUAL("4", ss.str());
+	histo.add_count("alpha");
+	histo.add_count("digit");
+	histo.add_count("white space");
+	histo.add_count("punctuation");
+	parse_add(histo,parse_string);
+	ss << histo;
+	CHECK_EQUAL(49,ss.str().length());
 }

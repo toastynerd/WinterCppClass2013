@@ -7,29 +7,19 @@
 #define HISTOGRAM_H
 #include <iostream>
 #include <string>
-
+#include <vector>
 
 class Histogram
 {
 public:
 	Histogram();
 	~Histogram();
-	friend void parse_add(Histogram&, std::string);
-	int get_alpha_count();
-	void get_alpha_count(std::ostream&);
-	int get_digit_count();
-	void get_digit_count(std::ostream&);
-	int get_whitespace_count();
-	void get_whitespace_count(std::ostream&);
-	int get_punct_count();
-	void get_punct_count(std::ostream&);
-	void show_histogram(std::ostream&);
+	void add_count(std::string);
+	friend bool parse_add(Histogram&, std::string);
+	friend std::ostream& operator<<(std::ostream&,const Histogram&);
 private:
-	int my_alpha_count;
-	int my_digit_count;
-	int my_whitespace_count;
-	int my_punct_count;
+	std::vector<std::string> my_count_name;
+	std::vector<int> my_count;
 };
-void parse_add(Histogram&, std::string);
 
 #endif

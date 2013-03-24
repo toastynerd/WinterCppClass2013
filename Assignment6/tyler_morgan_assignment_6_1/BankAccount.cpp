@@ -18,17 +18,6 @@ Account::Account()
 
 }
 
-Account::Account(const Account& account)
-	:my_type(account.my_type),
-	my_holder_name(account.my_holder_name),
-	my_account_number(account.my_account_number),
-	my_pin_number(account.my_pin_number),
-	my_balance(account.my_balance)
-{
-
-}
-
-
 Account::Account(AccountType type,std::string holder_name,int account_number,int pin_number)
 	:my_type(type),
 	my_holder_name(holder_name),
@@ -57,59 +46,9 @@ float Account::get_balance(int pin_number)
 	}
 }
 
-void Account::get_balance(std::ostream& os, int pin_number)
-{
-	if(my_pin_number != pin_number)
-	{
-		std::cout << "Sorry, incorrect pin!" << std::endl;
-		os << "error";
-		return;
-	}
-	else
-	{
-		os << my_balance;
-		return;
-	}
-}
-
 int Account::get_account_number()
 {
 	return my_account_number;
-}
-
-void Account::get_account_number(std::ostream& os)
-{
-	os << my_account_number;
-	return;
-}
-
-std::string Account::get_name()
-{
-	return my_holder_name;
-}
-
-void Account::get_name(std::ostream& os)
-{
-	os << my_holder_name;
-	return;
-}
-
-AccountType Account::get_type()
-{
-	return my_type;
-}
-
-void Account::get_type(std::ostream& os)
-{
-	if(my_type == checking)
-	{
-		os << "checking";
-	}
-	else if (my_type == savings)
-	{
-		os << "savings";
-	}
-	return;
 }
 
 void Account::withdraw(float amount, int pin_number)
@@ -175,4 +114,20 @@ void Account::transfer(float amount, Account& account_to, int pin_number)
 		}
 		std::cout << "transfer complete--------------------------------------------" << std::endl;
 	}
+}
+
+std::ostream& operator<<(std::ostream& os, const Account& account)
+{
+	os << "Account Type: ";
+	if(account.my_type == checking)
+	{
+		os << "checking" << std::endl;
+	}
+	else if(account.my_type == savings)
+	{
+		os << "savings" << std::endl;
+	}
+	os << "Account Number: " << account.my_account_number << std::endl;
+	os << "Account Holder: " << account.my_holder_name << std::endl;
+	os << "Account Balance: " << account.my_balance << std::endl;
 }

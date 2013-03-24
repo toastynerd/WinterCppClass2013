@@ -2,6 +2,7 @@
 #include "../BankAccount.h"
 #include "../Database.h"
 #include <sstream>
+#include <iostream>
 
 // include the header file for the class you are testing.
 
@@ -36,9 +37,12 @@ TEST(Withdraw, Account)
 	CHECK_EQUAL(10.0, account_1.get_balance(1234));
 }
 
-TEST(GetInfoMethods, Account)
+TEST(Ostream_overlaod, Account)
 {
-	CHECK_EQUAL(1,1);
+	std::stringstream ss;
+	Account account_1(checking, "tyler", 1234, 1234);
+	ss << account_1;
+	CHECK_EQUAL(85,ss.str().length());
 }
 
 TEST(Transfer, Account)
