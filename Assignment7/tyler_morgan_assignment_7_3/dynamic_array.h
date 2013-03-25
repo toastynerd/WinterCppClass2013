@@ -13,6 +13,7 @@ public:
 	void write_at(int index, int value);
 	const int get_at(int index);
 	void remove_at(int index);
+	int size();
 private:
 	int my_size;
 	int* my_array;
