@@ -24,7 +24,7 @@ TEST(put_at, DynamicArray)
 		array1.write_at(x,x);
 	}
 	array1.put_at(4,10);
-	CHECK_EQUAL(9, array1.get_at(10));
+	CHECK_EQUAL(2, array1.get_at(2));
 }
 
 TEST(size, DynamicArray)
@@ -41,8 +41,10 @@ TEST(size, DynamicArray)
 TEST(newone, DynamicArray)
 {
 	DynamicArray array1;
-	array1.write_at(5,0);
-	array1.write_at(6,1);
-	array1.write_at(7,2);
-	CHECK_EQUAL(7, array1.get_at(2));
+	array1.write_at(0,5);
+	array1.write_at(1,6);
+	array1.write_at(2,7);
+	array1.write_at(3,8);
+	array1.remove_at(1);
+	CHECK_EQUAL(7,array1.get_at(1));
 }

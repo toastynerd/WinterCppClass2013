@@ -14,6 +14,13 @@ void test_func(std::stringstream& ss)
 	ss<<test2.probe;
 }
 
+void another_func(std::ostream& os)
+{
+	static Probe probe;
+	probe.increase();
+	os << probe;
+}
+
 TEST(test_class_creation, TestClass)
 {
 	std::stringstream ss;
@@ -33,4 +40,13 @@ TEST(test_class_destructor, TestClass)
 	test_func(ss);
 	ss << test1.probe;
 	CHECK_EQUAL("21", ss.str()); //probe will be equal to 2 while in the function test_func and equal to 1 after
+}
+
+TEST(func_probe_test, Probe)
+{
+	std::stringstream ss;
+	another_func(ss);
+	another_func(ss);
+	another_func(ss);
+	CHECK_EQUAL("123",ss.str());
 }
