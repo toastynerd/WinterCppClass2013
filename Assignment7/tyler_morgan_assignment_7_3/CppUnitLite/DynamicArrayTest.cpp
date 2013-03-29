@@ -48,3 +48,13 @@ TEST(newone, DynamicArray)
 	array1.remove_at(1);
 	CHECK_EQUAL(7,array1.get_at(1));
 }
+
+TEST(subscript, DynamicArray)
+{
+	DynamicArray array1;
+	array1.write_at(0,1);
+	array1.write_at(1,2);
+	array1.write_at(2,3);
+	array1.write_at(3,4);
+	CHECK_EQUAL(4,array1[3]);
+}

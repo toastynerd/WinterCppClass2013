@@ -108,3 +108,8 @@ int DynamicArray::size()
 {
 	return my_size;
 }
+
+int& DynamicArray::operator[](int index)
+{
+	return my_array[index];
+}

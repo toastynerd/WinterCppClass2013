@@ -14,6 +14,7 @@ public:
 	const int get_at(int index);
 	void remove_at(int index);
 	int size();
+	int& operator[](int index);
 private:
 	int my_size;
 	int* my_array;
