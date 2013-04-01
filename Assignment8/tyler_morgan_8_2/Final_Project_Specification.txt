@@ -1,0 +1,12 @@
+System Description:
+My final project will be a zombie survival "rogue-like" game. The player will be presented a series of text graphics levels that they must navigate while avoiding zombies. Each level will be grid of 64 x 64 tiles that will be represented by P for the grid space the player occupies, * for a wall or obstacle, Z for a zombie and an X for the exit, with any open space represended as a space character " ". Each successive level will have more zombies and obstacles for the player to avoid in order to make it to the end of the level. If the player occupies the same space as a zombie the game will end and give the player their final score. The score will be based upon the inverse of moves the player made to complete the level(less moves means a higher score) and the level difficulty. Player input will come from the "wasd" keys and will conincide to the direction that player wants to move, up, down, left or right. Zombies will move directly towards the player at the same rate. Neither zombies nor players will be able to move through walls and no movement will happen until the player selects their move, making it a turn based game.
+
+Environmental Considerations:
+The hardware requirements are that computer has to be able to quickly write text and calculate zombie movement based upon the player location. It should be able to run on older hardware with minimal wait time. The computer has to be able to hold two 64x64 multi-dimensional array and be able to get text input from the end user.
+
+Test Requirements:
+Tests should include tests to make sure the level is properly drawn, the player is in the proper position and that the zombies move to the correct square based on the player position. There should also be tests to make sure the proper amount of zombies and walls have been created and that the level fills entire grid.
+
+Initial Design Strategy:
+I am planning on having three main classes. First, a level class that will be the container for the all information transmitted to the player. Second, a player class that will contain the current score and position of the player. Last, a zombie class that will contain a position and methods to move the zombie based on the position of the player.
+
