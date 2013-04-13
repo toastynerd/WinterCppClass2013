@@ -15,7 +15,9 @@ public:
 	void draw_level();
 	void update_level(); // code for moving zombies/players
 private:
-	int my_level_map[64][64];
+	const int max_x = 128;
+	const int max_y = 64;
+	int my_level_map[max_y][max_x];
 	vector<Zombie> my_zombies;
 	Player* my_player;
 }
