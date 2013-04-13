@@ -1,0 +1,17 @@
+I chose this design patter because it allow for the expansion of the game. By separating the zombie, player 
+and level classes it is possible to expand the functionality of the game. For instance, since the player
+class does not accept the input directly it would be trivial to make a two player game, or create a game
+that could played via a network or even create NPCS. Each zombie class having it's own ai logic rather than
+being centralized within the level class makes it easy to create special zombies. 
+
+When the game is started and new Game instance will be created, the game will display a main menu and 
+when the player selects the "start game" option it will call start_loop() which will first create a new player
+object, then a level object, then the loop will begin which will do the following:
+	Draw the level with the player in it
+	Get input from player
+	Update position of player/zombies
+	Check if the game is over
+	Repeat until game is over
+ When the game is over the Game object will run the end_game() function which will display the player score
+and exit to the main menu.
+
