@@ -8,7 +8,7 @@
 //also keeps track of whether or not it has been initialzed
 //that way, there's an easy to check to make sure there's only
 //1 goal in the level.
-
+// #pragma once
 class Point
 {
 	

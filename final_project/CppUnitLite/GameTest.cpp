@@ -1,6 +1,5 @@
 #include "TestHarness.h"
 #include "../level.h"
-#include "../point.h"
 #include <sstream>
 #include <iostream>
 
@@ -28,7 +27,7 @@ TEST(level_draw, Level)
 	Level level1(0);
 	level1.draw_level(ss);
 	CHECK_EQUAL('*',ss.str().at(0)); //check for a * at location 0,0
-	CHECK_EQUAL('*', ss.str().at(8192)); // check for a * at location 128,64
+	CHECK_EQUAL('*', ss.str().at(1536)); // check for a * at location 128,64
 	//I won't check for a ' ' because the walls in the interior of the level 
 	// will be generated randomly
 }
@@ -48,9 +47,26 @@ TEST(goal_location_methods, GoalLocaiton)
 	CHECK_EQUAL(20, goal.get_y());
 
 }
+TEST(player_position, Player)
+{
+	Player player1;
+	Player player2(15,20);
+	player1.set_location(5,6);
+	player1.move(1);
+	player1.move(4);
+	player2.change_score(15);
+
+	CHECK_EQUAL(15, player2.get_score());
+	CHECK_EQUAL(0, player1.get_score());
+	CHECK_EQUAL(4,player1.get_x());
+	CHECK_EQUAL(7, player1.get_y());
+
+}
 
 TEST(level_generation2, Level)
 {
+	//Hard to write a test to see if the random level looks alright, so this is more of
+	//visual test to run when testing.
 	std::stringstream ss;
 	Level level1(1);
 	level1.draw_level(ss);

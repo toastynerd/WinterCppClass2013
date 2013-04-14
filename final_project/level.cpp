@@ -6,10 +6,13 @@
 //Responsible to drawing and creating the current level. Will also keep track of both
 //player and zombie objects.
 #include "level.h"
-#include <cstdlib>
-#include <ctime>
+
 
 Level::Level(int difficulty)
+	:my_goal(),
+	level_over(false),
+	player_won(false),
+	zombie_count(0)
 {
 	std::srand(std::time(0)); //get a random seed
 	for(int y = 0; y < max_y; y++)
@@ -37,6 +40,28 @@ Level::Level(int difficulty)
 			}
 		}
 	}
+	int temp_rand;
+	while(true)
+	{
+		temp_rand = std::rand() % max_x;
+		if(my_level_map[temp_rand][max_y-2] != '*' && my_level_map[temp_rand][max_y-3]!='*')
+		{
+			break;
+		}
+	}
+	my_goal.set_goal(temp_rand,max_y-2);
+	my_level_map[my_goal.get_x()][my_goal.get_y()] = 'X';
+	player1.set_location(max_x/2,1);
+	my_level_map[player1.get_x()][player1.get_y()] = 'P';
+	if(difficulty < max_zombies)
+	{
+		zombie_count = difficulty;
+		for(int x =0; x<zombie_count;x++)
+		{
+			zombies[x].set_location(rand() % max_x, rand() % max_x);
+			my_level_map[zombies[x].get_x()][zombies[x].get_y()] = 'Z';
+		}
+	}
 }
 Level::~Level()
 {
@@ -53,6 +78,134 @@ void Level::draw_level(std::ostream& os)
 		}
 		os << std::endl;
 	}
+}
+void Level::update_level()
+{
+	if(check_for_goal())
+	{
+		level_over = true;
+		player_won = true;
+		return;
+	}
+	char input;
+	std::cout << "which way(x to quit)? ";
+	std::cin >> input;
+	std::cout << std::endl;
+	if(input == 'a' || input == 'A')
+	{
+		if(is_there_a_wall(player1.get_x() -1,player1.get_y()))
+		{
+			if(player1.get_x() - 1 != 0) //allow a player to destroy a wall 
+			{
+				my_level_map[player1.get_x() -1][player1.get_y()] = ' ';
+			}
+			else
+			{
+				return;
+			}
+		}
+		
+		else
+		{
+			my_level_map[player1.get_x()][player1.get_y()] = ' ';
+			player1.move(1);
+		}
+	}
+
+	if(input == 'd' || input == 'D')
+	{
+		if(is_there_a_wall(player1.get_x() +1,player1.get_y())) //allow player to destroy a wall
+		{
+			if(player1.get_x() + 2 != max_x)
+			{
+				my_level_map[player1.get_x() +1][player1.get_y()] = ' ';
+			}
+			else
+			{
+				return;
+			}
+		}
+		else
+		{
+			my_level_map[player1.get_x()][player1.get_y()] = ' ';
+			player1.move(2);
+		}	
+		
+	}
+
+if(input == 'w' || input == 'W')
+	{
+		if(is_there_a_wall(player1.get_x(), player1.get_y() - 1))
+		{
+			if(player1.get_y() - 1 != 0)
+			{
+				my_level_map[player1.get_x()][player1.get_y() -1] = ' ';
+			}
+			else
+			{
+				return;
+			}
+		}
+		else
+		{
+			my_level_map[player1.get_x()][player1.get_y()] = ' ';
+			player1.move(3);
+		}
+
+	}
+
+	if(input == 's' || input == 'S')
+	{
+		if(is_there_a_wall(player1.get_x(), player1.get_y() + 1))
+		{
+			if(player1.get_y() + 2 != max_y)
+			{
+				my_level_map[player1.get_x()][player1.get_y() +1] = ' ';
+			}
+			else
+			{
+				return;
+			}
+		}
+		else
+		{
+			my_level_map[player1.get_x()][player1.get_y()] = ' ';
+			player1.move(4);
+		}
+
+	}
+
+	if(input == 'x'||input == 'X')
+	{
+		level_over = true;
+	}
+
+	for(int i = 0;i < zombie_count;i++)
+	{
+		my_level_map[zombies[i].get_x()][zombies[i].get_y()] = ' ';
+		zombies[i].move(player1,this);
+		my_level_map[zombies[i].get_x()][zombies[i].get_y()] = 'Z';
+		if(zombies[i].get_y() == player1.get_y() && zombies[i].get_x() == player1.get_x())
+		{
+			//check if player has lost
+			level_over = true;
+			player_won = false;
+		}
+	}
+	my_level_map[player1.get_x()][player1.get_y()] = 'P';
+	my_level_map[my_goal.get_x()][my_goal.get_y()] = 'X';
+
+
+}
+
+bool Level::level_end()
+{
+	return level_over;
+}
+
+bool Level::did_player_win()
+{
+	return player_won;
 }
 
 bool Level::should_be_wall(int x, int y)
@@ -118,7 +271,8 @@ bool Level::should_be_wall(int x, int y)
 		//greater chance to continue a wall
 		rand_num += 60;
 	}
-	std::cout << rand_num << std::endl;
+	//random number generator debug
+	// std::cout << rand_num << std::endl;
 	if(rand_num >= wall_chance)
 	{
 		return true;
@@ -127,5 +281,38 @@ bool Level::should_be_wall(int x, int y)
 	{
 		return false;
 	}
+}
 
+bool Level::is_there_a_wall(int x, int y)
+{
+	if(my_level_map[x][y] == '*')
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Level::check_for_goal()
+{
+	if(player1.get_x() == my_goal.get_x() && player1.get_y() == my_goal.get_y())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int Level::get_max_x()
+{
+	return max_x;
+}
+
+int Level::get_max_y()
+{
+	return max_y;
 }
