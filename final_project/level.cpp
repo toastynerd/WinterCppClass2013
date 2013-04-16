@@ -58,7 +58,7 @@ Level::Level(int difficulty)
 		zombie_count = difficulty;
 		for(int x =0; x<zombie_count;x++)
 		{
-			zombies[x].set_location(rand() % max_x, rand() % max_x);
+			zombies[x].set_location(std::rand() % max_x, std::rand() % max_x);
 			my_level_map[zombies[x].get_x()][zombies[x].get_y()] = 'Z';
 		}
 	}
@@ -81,16 +81,31 @@ void Level::draw_level(std::ostream& os)
 }
 void Level::update_level()
 {
+	//check for both win and loss before getting player input
 	if(check_for_goal())
 	{
 		level_over = true;
 		player_won = true;
 		return;
 	}
+	for(int i = 0; i <= zombie_count;i++)
+	{
+		if(zombies[i].get_y() == player1.get_y() && zombies[i].get_x() == player1.get_x())
+		{
+			//check if player has lost
+			level_over = true;
+			player_won = false;
+			return;
+		}
+	}
+
+	
 	char input;
-	std::cout << "which way(x to quit)? ";
+	std::cout << "which way(w for up,a for left,s for down,d for right,x to quit)? ";
 	std::cin >> input;
 	std::cout << std::endl;
+
+
 	if(input == 'a' || input == 'A')
 	{
 		if(is_there_a_wall(player1.get_x() -1,player1.get_y()))
@@ -179,21 +194,16 @@ if(input == 'w' || input == 'W')
 	{
 		level_over = true;
 	}
-
+	
+	my_level_map[player1.get_x()][player1.get_y()] = 'P';
+	my_level_map[my_goal.get_x()][my_goal.get_y()] = 'X';
 	for(int i = 0;i < zombie_count;i++)
 	{
 		my_level_map[zombies[i].get_x()][zombies[i].get_y()] = ' ';
 		zombies[i].move(player1,this);
 		my_level_map[zombies[i].get_x()][zombies[i].get_y()] = 'Z';
-		if(zombies[i].get_y() == player1.get_y() && zombies[i].get_x() == player1.get_x())
-		{
-			//check if player has lost
-			level_over = true;
-			player_won = false;
-		}
+		
 	}
-	my_level_map[player1.get_x()][player1.get_y()] = 'P';
-	my_level_map[my_goal.get_x()][my_goal.get_y()] = 'X';
 
 
 }
@@ -315,4 +325,24 @@ int Level::get_max_x()
 int Level::get_max_y()
 {
 	return max_y;
+}
+
+void Level::set_player_location(int x,int y)
+{
+	player1.set_location(x,y);
+}
+
+void Level::set_zombie_location(int zombie_num, int x, int y)
+{
+	zombies[zombie_num].set_location(x,y);
+}
+
+int Level::get_goal_location_x()
+{
+	return my_goal.get_x();
+}
+
+int Level::get_goal_location_y()
+{
+	return my_goal.get_y();
 }

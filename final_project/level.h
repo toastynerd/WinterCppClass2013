@@ -27,6 +27,10 @@ public:
 	bool is_there_a_wall(int x, int y);
 	int get_max_x();
 	int get_max_y();
+	void set_player_location(int x,int y);
+	void set_zombie_location(int zombie_num, int x, int y);
+	int get_goal_location_x();
+	int get_goal_location_y();
 
 private:
 	bool should_be_wall(int x, int y); // check if there should be a wall created at that location, used init

@@ -62,6 +62,33 @@ TEST(player_position, Player)
 	CHECK_EQUAL(7, player1.get_y());
 
 }
+TEST(Zombies_kill_player, Level)
+{
+	//Test to see that if a player occupies the same space as a zombie the level ends
+	Level level(1);
+	level.set_player_location(1,1);
+	level.set_zombie_location(0,1,1);
+	level.update_level();
+	CHECK_EQUAL(true, level.level_end());
+}
+
+TEST(Multiple_zombies_kill_player, Level)
+{
+	Level level(3);
+	level.set_player_location(1,1);
+	level.set_zombie_location(1,1,1);
+	level.update_level();
+	CHECK_EQUAL(true, level.level_end());
+}
+
+TEST(Player_win, Level)
+{
+	Level level(1);
+	level.set_player_location(level.get_goal_location_x(),level.get_goal_location_y());
+	level.update_level();
+	CHECK_EQUAL(true, level.level_end());
+	CHECK_EQUAL(true, level.did_player_win());
+}
 
 TEST(level_generation2, Level)
 {
@@ -73,3 +100,4 @@ TEST(level_generation2, Level)
 	std::cout << ss.str();
 
 }
+

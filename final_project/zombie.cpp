@@ -32,9 +32,19 @@ void Zombie::set_location(int x, int y)
 
 void Zombie::move(Player& player, Level * level)
 {
-	if(distance_to_player_x(player) < distance_to_player_y(player))
+	//fixes a wierd bug where zombie would 2x what it should be
+	if(my_location.get_x() > level->get_max_x())
 	{
-		if(player.get_x() < my_location.get_x() && !level->is_there_a_wall(my_location.get_x() -1, my_location.get_y()))
+		my_location.set_x(my_location.get_x() - level->get_max_x());
+	}
+	if(my_location.get_y() > level->get_max_y())
+	{
+		my_location.set_y(my_location.get_y() - level->get_max_y());
+	}
+
+	if((distance_to_player_x(player) > distance_to_player_y(player) || distance_to_player_y(player) == 0) && distance_to_player_x(player) != 0 )
+	{
+		if(player.get_x() < my_location.get_x() && !level->is_there_a_wall(my_location.get_x() - 1, my_location.get_y()))
 		{
 			my_location.inc_x(-1);
 			return;
@@ -44,44 +54,35 @@ void Zombie::move(Player& player, Level * level)
 			my_location.inc_x(1);
 			return;
 		}
-		//if the zombie has no moves will "jump" up to 2 x and 2 y
-		int rand_x = rand() % 4 - 2; 
-		int rand_y = rand() % 4 - 2;
-		if(my_location.get_y() + rand_y > 0 && my_location.get_y() + rand_y < level->get_max_y())
-		{
-			my_location.inc_y(rand_y);
-		}
-		if(my_location.get_x() + rand_x > 0 && my_location.get_x() + rand_x < level->get_max_x())
-		{
-			my_location.inc_x(rand_x);
-		}
-		return;
+		
 	}
-	else
+
+	
+	if(player.get_y() < my_location.get_y() && !level->is_there_a_wall(my_location.get_x(), my_location.get_y() - 1))
 	{
-		if(player.get_y() < my_location.get_y() && !level->is_there_a_wall(my_location.get_x(), my_location.get_y() -1))
-		{
-			my_location.inc_y(-1);
-			return;
-		}
-		if(player.get_y() > my_location.get_y() && !level->is_there_a_wall(my_location.get_x(), my_location.get_y() +1))
-		{
-			my_location.inc_y(1);
-			return;
-		}
-		//if the zombie has no moves will "jump" up to 2 x and 2 y
-		int rand_x = rand() % 4 - 2; 
-		int rand_y = rand() % 4 - 2;
-		if(my_location.get_y() + rand_y > 0 && my_location.get_y() + rand_y < level->get_max_y())
-		{
-			my_location.inc_y(rand_y);
-		}
-		if(my_location.get_x() + rand_x > 0 && my_location.get_x() + rand_x < level->get_max_x())
-		{
-			my_location.inc_x(rand_x);
-		}
+		//std::cout << my_location.get_y() << "b" << player.get_y() << std::endl;
+		my_location.inc_y(-1);
 		return;
 	}
+	if(player.get_y() > my_location.get_y()  && !level->is_there_a_wall(my_location.get_x(), my_location.get_y() + 1))
+	{
+		// std::cout << my_location.get_y() << "a" << player.get_y() << std::endl;
+		my_location.inc_y(1);
+		return;
+	}
+	//if the zombie has no moves will "jump" up to 2 x and 2 y
+	int rand_x = rand() % 4 - 2; 
+	int rand_y = rand() % 4 - 2;
+	if(my_location.get_y() + rand_y > 0 && my_location.get_y() + rand_y < level->get_max_y())
+	{
+		my_location.inc_y(rand_y);
+	}
+	if(my_location.get_x() + rand_x > 0 && my_location.get_x() + rand_x < level->get_max_x())
+	{
+		my_location.inc_x(rand_x);
+	}
+	return;
+	
 	
 }
 
